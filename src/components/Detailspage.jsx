@@ -2,9 +2,13 @@ import React from "react";
 import { Container, Col, Image, Row } from "react-bootstrap";
 
 export default class Detailspage extends React.Component {
-  state = {
-    jobDetails: null,
-  };
+  constructor(props) {
+    super(props);
+    console.log(this.props.match.params.id)
+    this.state = {
+      jobDetails: null,
+    };}
+  
 
   componentDidMount() {
     this.getJobDetails();
@@ -12,7 +16,7 @@ export default class Detailspage extends React.Component {
 
   getJobDetails = async () => {
     const response = await fetch(
-      `https://strive-proxy.herokuapp.com/https://jobs.github.com/positions/${this.props.match.params.jobId}.json`
+      `https://strive-proxy.herokuapp.com/https://jobs.github.com/positions/${this.props.match.params.id}.json`
     );
     const jobDetails = await response.json();
     console.log(jobDetails);
@@ -33,9 +37,11 @@ export default class Detailspage extends React.Component {
                   className="header-img me-3"
                   src={jobDetails.company_logo}
                 />
-                <h1>{jobDetails.company}</h1>
+                 
+                
               </Col>
               <Col xs={12} className=" ">
+              <h1>{jobDetails.company}</h1>
                 <div
                   dangerouslySetInnerHTML={{ __html: jobDetails.description }}
                 />
